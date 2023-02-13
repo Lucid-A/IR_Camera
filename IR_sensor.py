@@ -96,9 +96,10 @@ class IR_sensor:
         if self.__com.isOpen():
             self.__com.close()
 
-        with self.__com.open():
-            self.write_reg(IR_sensor_Reg.output_mode, self.output_mode)
-            self.write_reg(IR_sensor_Reg.img_output_fmt, self.img_output_fmt)
+        self.__com.open()
+        self.write_reg(IR_sensor_Reg.output_mode, self.output_mode)
+        self.write_reg(IR_sensor_Reg.img_output_fmt, self.img_output_fmt)
+        self.close()
 
 
     def __calculate_checksum(self, frame):
@@ -217,7 +218,8 @@ class IR_sensor:
 
         img_h = self.read_reg(IR_sensor_Reg.to_h8_start, 64)
         if img_h is not None:
-            img = [(t - 127) for t in img_h]
+            img = [(t + 127) for t in img_h]
+            #img = img_h
 
         if resolution_high:
             img_l = self.read_reg(IR_sensor_Reg.to_l8_start, 64)
