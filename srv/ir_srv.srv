@@ -1,0 +1,5 @@
+IR_Camera_data ir_data
+---
+string result
+uint8 high_count
+uint8 low_count

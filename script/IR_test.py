@@ -80,9 +80,11 @@ while(True):
         break
     if temp_map is not None:
         #img_gray = np.frombuffer(temp_map, dtype=np.uint8).reshape(8,8)
+        temp_map = [i * 10 for i in temp_map]
         img_gray = np.asarray(temp_map, dtype=np.uint8).reshape(8,8)
         img_gray = bilinear_interpolation(img_gray, scale=4.0)
         #print(img_gray)
+        img_gray = cv2.resize(img_gray, (50, 50))
         img_color = cv2.applyColorMap(img_gray, cv2.COLORMAP_JET)
         cv2.imshow(name, img_color)
 
